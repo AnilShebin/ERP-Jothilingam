@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -12,15 +12,15 @@ const Sidebar = ({ user }: SiderbarProps) => {
   return (
     <section className="sidebar">
       <nav className="flex flex-col gap-4">
-        <Link href="/" className="mb-12 cursor-pointor flex items-center gap-2">
+        <Link href="/" className="mb-6 cursor-pointor flex items-center gap-2">
           <Image
             src="/icons/logo.svg"
             width={34}
             height={34}
-            alt="CA Jothilingam logo"
-            className="size-[24px] max-xl:size-14"
+            alt="Jothilingam logo"
+            className="size-[34px] max-xl:size-14"
           />
-          <h1 className="sidebar-logo">JothiLingam</h1>
+          <h1 className="sidebar-logo">Jothilingam</h1>
         </Link>
 
         {sidebarLinks.map((item) => {
@@ -37,18 +37,18 @@ const Sidebar = ({ user }: SiderbarProps) => {
                   alt={item.label}
                   fill
                   className={cn({
-                    'brightness-[3] invert-0': isActive
+                    "brightness-[3] invert-0": isActive,
                   })}
                 />
               </div>
-              <p className={cn('sidebar-label', { '!text-white': isActive })}>
+              <p className={cn("sidebar-label", { "!text-white": isActive })}>
                 {item.label}
               </p>
             </Link>
           );
         })}
       </nav>
-    </section >
+    </section>
   );
 };
 
