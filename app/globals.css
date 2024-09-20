@@ -375,4 +375,16 @@
   .sidebar-label {
     @apply text-16 font-semibold text-black-2 max-xl:hidden;
   }
+
+  .total-staff {
+    @apply flex flex-col justify-between p-4 md:p-6 gap-2 md:gap-4 w-full h-auto bg-white border border-gray-300 shadow-md rounded-lg;
+  }
+
+  .total-staffs-home {
+    @apply flex justify-between items-center w-full;
+  }
+
+  .total-staff-count {
+    @apply text-[20px] md:text-[24px] font-bold text-[#101828];
+  }
 }

@@ -156,7 +156,10 @@ declare interface HeaderBoxProps {
 }
 
 declare interface MobileNavProps {
-  user: User;
+  user: {
+    firstName: string;
+    lastName: string;
+  };
 }
 
 declare interface PageHeaderProps {
@@ -219,7 +222,10 @@ declare interface RightSidebarProps {
 }
 
 declare interface SiderbarProps {
-  user: User;
+  user: {
+    firstName: string;
+    lastName: string;
+  };
 }
 
 declare interface RecentTransactionsProps {
@@ -325,4 +331,16 @@ declare interface getBankProps {
 
 declare interface getBankByAccountIdProps {
   accountId: string;
+}
+
+declare interface TotalStaffProps {
+  totalStaffs: number;
+}
+
+declare interface TodayAttendanceProps {
+  todayAttendance: number;
+}
+
+declare interface TotalTasksProps {
+  totalTasks: number;
 }
