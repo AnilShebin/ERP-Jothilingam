@@ -1,13 +1,19 @@
 export const sidebarLinks = [
   {
     imgURL: "/icons/home.svg",
-    route: "/",
-    label: "Home",
+    route: "/admin-dashboard",
+    label: "Dashboard",
   },
   {
     imgURL: "/icons/user-octagon.svg",
     route: "/staff",
     label: "Staff",
+    subRoutes: ["/add-staffs", "/staff-details", "/staff-reports"], // example sub-routes
+  },
+  {
+    imgURL: "/icons/attendence-sidebar.svg",
+    route: "/attendance",
+    label: "Attendance",
   },
   {
     imgURL: "/icons/transaction.svg",
@@ -25,6 +31,7 @@ export const sidebarLinks = [
     label: "Tasks",
   },
 ];
+
 
 // good_user / good_password - Bank of America
 export const TEST_USER_ID = "6627ed3d00267aa6fa3e";

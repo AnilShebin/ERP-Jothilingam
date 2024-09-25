@@ -195,19 +195,48 @@ export const getTransactionStatus = (date: Date) => {
   return date > twoDaysAgo ? "Processing" : "Success";
 };
 
-export const authFormSchema = (type: string) => z.object({
-  // sign up
-  firstName: type === 'sign-in' ? z.string().optional(): z.string().min(3),
-  lastName: type === 'sign-in' ? z.string().optional(): z.string().min(3),
-  address1: type === 'sign-in' ? z.string().optional(): z.string().max(50),
-  city: type === 'sign-in' ? z.string().optional(): z.string().max(25),
-  state: type === 'sign-in' ? z.string().optional() : z.string().length(2),
-  country: type === 'sign-in' ? z.string().optional(): z.string().min(2).max(25),
-  postalCode: type === 'sign-in' ? z.string().optional(): z.string().min(6).max(6),
-  dateOfBirth: type === 'sign-in' ? z.string().optional(): z.string().min(10),
-  gender: type === 'sign-in' ? z.string().optional(): z.string().max(10),
+export const authFormSchema = (type: string) =>
+  z.object({
+    // sign up
+    firstName: type === "sign-in" ? z.string().optional() : z.string().min(3),
+    lastName: type === "sign-in" ? z.string().optional() : z.string().min(3),
+    address1: type === "sign-in" ? z.string().optional() : z.string().max(50),
+    city: type === "sign-in" ? z.string().optional() : z.string().max(25),
+    state: type === "sign-in" ? z.string().optional() : z.string().length(2),
+    country:
+      type === "sign-in" ? z.string().optional() : z.string().min(2).max(25),
+    postalCode:
+      type === "sign-in" ? z.string().optional() : z.string().min(6).max(6),
+    dateOfBirth:
+      type === "sign-in" ? z.string().optional() : z.string().min(10),
+    gender: type === "sign-in" ? z.string().optional() : z.string().max(10),
 
-  // (sign in / sign up)
-  email: z.string().email(),
-  password: z.string().min(8),
-});
+    // (sign in / sign up)
+    email: z.string().email(),
+    password: z.string().min(8),
+  });
+
+  export const addStaffSchema = z.object({
+    firstName: z.string().min(1, 'First Name is required'),
+    lastName: z.string().min(1, 'Last Name is required'),
+    gender: z.enum(['Male', 'Female', 'Other'], { errorMap: () => ({ message: 'Please select a gender' }) }),
+    dateOfBirth: z.string().min(1, 'Date of Birth is required'),
+    address: z.string().min(1, 'Address is required'),
+    city: z.string().min(1, 'City is required'),
+    state: z.string().min(1, 'State is required'),
+    country: z.string().min(1, 'Country is required'),
+    postalCode: z.string().min(1, 'Postal Code is required'),
+    email: z.string().email('Invalid email address'),
+    phoneNumber: z.string().min(10, 'Phone number must be at least 10 digits'),
+    alternatePhoneNumber: z.string().optional(), // Optional field
+    password: z.string().min(6, 'Password must be at least 6 characters'),
+    confirmPassword: z.string().min(6, 'Please confirm your password'),
+    documents: z.object({
+      degreeCertificate: z.boolean().optional(),
+      aadhaar: z.boolean().optional(),
+      experienceCertificate: z.boolean().optional(),
+    })
+  }).refine((data) => data.password === data.confirmPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
+  });

@@ -387,42 +387,89 @@
   .total-staff-count {
     @apply text-[20px] md:text-[24px] font-bold text-[#101828];
   }
+
+  .attendance-home {
+    @apply flex w-full flex-1 flex-col gap-8 px-5 sm:px-8 py-7 lg:py-12 xl:max-h-screen xl:overflow-y-scroll;
+  }
 }
 
 /* Custom Scrollbar Styles */
 ::-webkit-scrollbar {
-  width: 5px; /* Width of the vertical scrollbar */
-  height: 5px; /* Height of the horizontal scrollbar */
+  width: 8px; /* Width of the vertical scrollbar */
+  height: 8px; /* Height of the horizontal scrollbar */
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(162, 161, 168, 0.1); /* Track background for vertical scrollbar */
-  border-radius: 100px; /* Rounded edges for track */
+  background: #f0f4f8; /* Light background for the track */
+  border-radius: 10px; /* Rounded edges for track */
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #7152F3; /* Thumb color for vertical scrollbar */
-  border-radius: 100px; /* Rounded edges for thumb */
+  background: #667085; /* Thumb color using #667085 */
+  border-radius: 10px; /* Rounded edges for thumb */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #5f43c8; /* Darker shade on hover for vertical scrollbar */
+  background: #596672; /* Darker shade on hover for thumb */
 }
 
 /* Horizontal scrollbar styles */
 ::-webkit-scrollbar-horizontal {
-  height: 5px; /* Height of the horizontal scrollbar */
+  height: 8px; /* Height of the horizontal scrollbar */
 }
 
 ::-webkit-scrollbar-track:horizontal {
-  background: rgba(162, 161, 168, 0.1); /* Track background for horizontal scrollbar */
+  background: #f0f4f8; /* Light background for the track */
+  border-radius: 10px; /* Rounded edges for track */
 }
 
 ::-webkit-scrollbar-thumb:horizontal {
-  background: #7152F3; /* Thumb color for horizontal scrollbar */
-  border-radius: 100px; /* Rounded edges for thumb */
+  background: #667085; /* Thumb color using #667085 */
+  border-radius: 10px; /* Rounded edges for thumb */
 }
 
 ::-webkit-scrollbar-thumb:horizontal:hover {
-  background: #5f43c8; /* Darker shade on hover for horizontal scrollbar */
+  background: #596672; /* Darker shade on hover for thumb */
+}
+
+/* Custom style for input[type="date"] */
+input[type="date"].custom-date {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  position: relative;
+  background-color: white;
+  border: 1px solid #d0d0d0;
+  padding: 0.75rem;
+  color: #6b7280;
+  font-size: 1rem;
+  width: 100%;
+  border-radius: 0.5rem;
+  outline: none;
+}
+
+input[type="date"].custom-date::-webkit-calendar-picker-indicator {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: transparent;
+  background: transparent;
+}
+
+input[type="date"].custom-date::before {
+  content: attr(placeholder);
+  color: #9ca3af; /* Placeholder color */
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+input[type="date"].custom-date:not(:placeholder-shown)::before {
+  content: '';
+}
+
+input[type="date"].custom-date:focus::before {
+  content: '';
 }

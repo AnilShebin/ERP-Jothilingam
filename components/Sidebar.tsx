@@ -6,13 +6,13 @@ import { sidebarLinks } from "@/constants";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 
-const Sidebar = ({ user }: SiderbarProps) => {
+const Sidebar = ({ user }: SidebarProps) => {
   const pathname = usePathname();
 
   return (
     <section className="sidebar">
       <nav className="flex flex-col gap-4">
-        <Link href="/" className="mb-6 cursor-pointor flex items-center gap-2">
+        <Link href="/" className="mb-6 cursor-pointer flex items-center gap-2">
           <Image
             src="/icons/logo.svg"
             width={34}
@@ -24,13 +24,18 @@ const Sidebar = ({ user }: SiderbarProps) => {
         </Link>
 
         {sidebarLinks.map((item) => {
+          // Enhanced logic to check for active routes, including sub-routes
           const isActive =
-            pathname === item.route || pathname.startsWith(`${item.route}/`);
+            pathname === item.route ||
+            pathname.startsWith(`${item.route}/`) ||
+            (item.subRoutes && item.subRoutes.some((subRoute) => pathname.startsWith(subRoute)));
+
           return (
             <Link
               href={item.route}
               key={item.label}
-              className={cn("sidebar-link", { "bg-bank-gradient": isActive })}>
+              className={cn("sidebar-link", { "bg-bank-gradient": isActive })}
+            >
               <div className="relative size-6">
                 <Image
                   src={item.imgURL}
