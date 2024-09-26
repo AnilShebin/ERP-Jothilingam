@@ -2,12 +2,20 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { sidebarLinks } from "@/constants";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
+import { adminSidebarLinks, staffSidebarLinks } from "@/constants"; // Import link sets
 
-const Sidebar = ({ user }: SidebarProps) => {
+type SidebarProps = {
+  user: { firstName: string; lastName: string };
+  role: "admin" | "staff"; // Prop for role
+};
+
+const Sidebar = ({ user, role }: SidebarProps) => {
   const pathname = usePathname();
+
+  // Determine which links to use based on the role
+  const sidebarLinks = role === "admin" ? adminSidebarLinks : staffSidebarLinks;
 
   return (
     <section className="sidebar">
@@ -24,10 +32,9 @@ const Sidebar = ({ user }: SidebarProps) => {
         </Link>
 
         {sidebarLinks.map((item) => {
-          // Enhanced logic to check for active routes, including sub-routes
+          // Logic to check if the current route is active or a subroute is active
           const isActive =
             pathname === item.route ||
-            pathname.startsWith(`${item.route}/`) ||
             (item.subRoutes && item.subRoutes.some((subRoute) => pathname.startsWith(subRoute)));
 
           return (

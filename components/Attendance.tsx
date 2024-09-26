@@ -9,55 +9,59 @@ import {
   MRT_Row,
   MRT_RowVirtualizer,
 } from "material-react-table";
-import { Box, Button } from "@mui/material";
-import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import { FileDown } from "lucide-react";
 import { mkConfig, generateCsv, download } from "export-to-csv";
-import { makeData, type Person } from "./makeData"; // Ensure your data structure matches the fields used
-import { useRouter } from "next/navigation"; // Updated import for Next.js navigation
-import Image from "next/image"; // Import the Image component
-import AddStaffIcon from "/public/icons/add-staff.svg"; // Import your SVG
+import { makeData, type Person } from "./makeData";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 const Attendance = () => {
-  const router = useRouter(); // Initialize the router
+  const router = useRouter();
 
   const columns = useMemo<MRT_ColumnDef<Person>[]>(
     () => [
       {
-        accessorKey: "staffId", // Field: Staff ID
+        accessorKey: "staffId",
         header: "Staff ID",
         size: 100,
       },
       {
-        accessorKey: "name", // Merged Field: Name
+        accessorKey: "name",
         header: "Name",
         size: 240,
         Cell: ({ row }: { row: MRT_Row<Person> }) => (
-          <>
-            {row.original.firstName} {row.original.lastName}
-          </>
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 text-sm font-medium">
+              {row.original.firstName[0]}
+              {row.original.lastName[0]}
+            </div>
+            <span>
+              {row.original.firstName} {row.original.lastName}
+            </span>
+          </div>
         ),
       },
       {
-        accessorKey: "designation", // Field: Designation
+        accessorKey: "designation",
         header: "Designation",
         size: 300,
       },
       {
-        accessorKey: "role", // Field: Role
+        accessorKey: "role",
         header: "Role",
       },
       {
-        accessorKey: "status", // Field: Status
+        accessorKey: "status",
         header: "Status",
         Cell: ({ row }: { row: MRT_Row<Person> }) => (
           <span
             className={`${
               row.original.status === "On Time"
-                ? "bg-[#E5F9F1] text-[#3FC28A]"
+                ? "bg-green-100 text-green-600"
                 : row.original.status === "Late"
-                ? "bg-[#FEE4E2] text-[#F45B69]"
-                : "bg-[rgba(244,91,105,0.1)] text-gray-600"
-            } rounded px-2 py-1 text-sm`}
+                ? "bg-red-100 text-red-600"
+                : "bg-gray-100 text-gray-600"
+            } rounded-full px-2 py-1 text-xs font-medium`}
           >
             {row.original.status}
           </span>
@@ -67,7 +71,6 @@ const Attendance = () => {
     []
   );
 
-  // For CSV export configuration
   const csvConfig = mkConfig({
     fieldSeparator: ",",
     decimalSeparator: ".",
@@ -81,7 +84,7 @@ const Attendance = () => {
   };
 
   const handleExportData = () => {
-    const csv = generateCsv(csvConfig)(data); // Ensure 'data' is the source for the CSV
+    const csv = generateCsv(csvConfig)(data);
     download(csvConfig)(csv);
   };
 
@@ -92,13 +95,12 @@ const Attendance = () => {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setData(makeData(10_000)); // Simulating data generation
+      setData(makeData(10_000));
       setIsLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    // Scroll to the top of the table when the sorting changes
     try {
       rowVirtualizerInstanceRef.current?.scrollToIndex?.(0);
     } catch (error) {
@@ -109,56 +111,53 @@ const Attendance = () => {
   const table = useMaterialReactTable({
     columns,
     data,
-    enableRowSelection: true,
     enableStickyHeader: true,
     enableStickyFooter: true,
     enablePagination: true,
-    muiTableContainerProps: { sx: { maxHeight: "50vh" } },
+    muiTableContainerProps: { sx: { maxHeight: "calc(100vh - 200px)" } },
     onSortingChange: setSorting,
     state: { isLoading, sorting },
     rowVirtualizerInstanceRef,
     rowVirtualizerOptions: { overscan: 5 },
     columnVirtualizerOptions: { overscan: 2 },
     renderTopToolbarCustomActions: ({ table }) => (
-      <Box
-        sx={{ display: "flex", gap: "16px", padding: "8px", flexWrap: "wrap" }}
-      >
+      <div className="flex gap-2 flex-wrap">
         <Button
-          className="export-button"
+          variant="outline"
+          size="sm"
           onClick={handleExportData}
-          startIcon={<FileDownloadIcon />}
         >
+          <FileDown className="mr-2 h-4 w-4" />
           Export All Data
         </Button>
         <Button
-          className="export-button"
+          variant="outline"
+          size="sm"
           disabled={table.getPrePaginationRowModel().rows.length === 0}
-          onClick={() =>
-            handleExportRows(table.getPrePaginationRowModel().rows)
-          }
-          startIcon={<FileDownloadIcon />}
+          onClick={() => handleExportRows(table.getPrePaginationRowModel().rows)}
         >
+          <FileDown className="mr-2 h-4 w-4" />
           Export All Rows
         </Button>
         <Button
-          className="export-button"
+          variant="outline"
+          size="sm"
           disabled={table.getRowModel().rows.length === 0}
           onClick={() => handleExportRows(table.getRowModel().rows)}
-          startIcon={<FileDownloadIcon />}
         >
+          <FileDown className="mr-2 h-4 w-4" />
           Export Page Rows
         </Button>
         <Button
-          className="export-button"
-          disabled={
-            !table.getIsSomeRowsSelected() && !table.getIsAllRowsSelected()
-          }
+          variant="outline"
+          size="sm"
+          disabled={!table.getIsSomeRowsSelected() && !table.getIsAllRowsSelected()}
           onClick={() => handleExportRows(table.getSelectedRowModel().rows)}
-          startIcon={<FileDownloadIcon />}
         >
+          <FileDown className="mr-2 h-4 w-4" />
           Export Selected Rows
         </Button>
-      </Box>
+      </div>
     ),
     initialState: {
       columnVisibility: {
@@ -168,23 +167,14 @@ const Attendance = () => {
   });
 
   return (
-    <section>
-      {/* Header with Title and Add Staff Button */}
-      <header
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "16px",
-        }}
-      >
-      </header>
+    <div className="space-y-4">
+      <div className="flex justify-between items-center">
+      </div>
 
-      {/* Table */}
-      <div>
+      <div className="rounded-md border">
         <MaterialReactTable table={table} />
       </div>
-    </section>
+    </div>
   );
 };
 

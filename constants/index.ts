@@ -1,37 +1,46 @@
-export const sidebarLinks = [
+// sidebarLinks.ts (Admin and Staff Sidebar Links)
+export const adminSidebarLinks = [
   {
     imgURL: "/icons/home.svg",
     route: "/admin-dashboard",
-    label: "Dashboard",
+    label: "Home",
   },
   {
     imgURL: "/icons/user-octagon.svg",
     route: "/staff",
     label: "Staff",
-    subRoutes: ["/add-staffs", "/staff-details", "/staff-reports"], // example sub-routes
+    subRoutes: ["/add-staffs", "/edit-staff"],
   },
   {
     imgURL: "/icons/attendence-sidebar.svg",
     route: "/attendance",
     label: "Attendance",
   },
-  {
-    imgURL: "/icons/transaction.svg",
-    route: "/work-orders",
-    label: "Work Orders",
-  },
-  {
-    imgURL: "/icons/clients-sidebar.svg",
-    route: "/clients",
-    label: "Clients",
-  },
-  {
-    imgURL: "/icons/task-sidebar.svg",
-    route: "/tasks",
-    label: "Tasks",
-  },
+  // {
+  //   imgURL: "/icons/transaction.svg",
+  //   route: "/work-orders",
+  //   label: "Work Orders",
+  // },
+  // {
+  //   imgURL: "/icons/clients-sidebar.svg",
+  //   route: "/clients",
+  //   label: "Clients",
+  // },
+  // {
+  //   imgURL: "/icons/task-sidebar.svg",
+  //   route: "/tasks",
+  //   label: "Tasks",
+  // },
 ];
 
+export const staffSidebarLinks = [
+  {
+    imgURL: "/icons/home.svg",
+    route: "/staff-dashboard",
+    label: "Home",
+    subRoutes: ["/add-staffs", "/edit-staff"],
+  },
+];
 
 // good_user / good_password - Bank of America
 export const TEST_USER_ID = "6627ed3d00267aa6fa3e";

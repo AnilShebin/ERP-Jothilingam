@@ -1,16 +1,16 @@
 import Sidebar from "@/components/Sidebar";
 import Image from "next/image";
 
-export default function AdminLayout({
+export default function StaffLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Ensure the role is explicitly typed as "admin"
+  // Ensure the role is explicitly typed as "staff"
   const loggedIn: { firstName: string; lastName: string; role: "admin" | "staff" } = {
-    firstName: "Admin",
+    firstName: "Staff",
     lastName: "User",
-    role: "admin",
+    role: "staff", // Explicitly set as "staff"
   };
 
   return (

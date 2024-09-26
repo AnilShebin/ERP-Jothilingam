@@ -9,15 +9,13 @@ import {
   type MRT_RowVirtualizer,
   MRT_Row,
 } from "material-react-table";
-import { Box, Button, IconButton, Tooltip } from "@mui/material";
-import FileDownloadIcon from "@mui/icons-material/FileDownload";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
+import { Box, IconButton, Tooltip } from "@mui/material";
+import { FileDown, Edit, Trash2, UserPlus } from "lucide-react";
 import { mkConfig, generateCsv, download } from "export-to-csv";
 import { makeData, type Person } from "./makeData";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import AddStaffIcon from "/public/icons/add-staff.svg";
+import { Button } from "@/components/ui/button";
 
 const AddStaffTable = () => {
   const router = useRouter();
@@ -43,8 +41,7 @@ const AddStaffTable = () => {
   }, [sorting]);
 
   const handleEditRow = useCallback((row: MRT_Row<Person>) => {
-    // Redirect to the edit page with the staff ID as a query parameter
-    router.push(`/edit-staff?id=${row.original.staffId}`); // Adjusted the parameter name to match the EditStaffForm
+    router.push(`/edit-staff?id=${row.original.staffId}`);
   }, [router]);
 
   const handleDeleteRow = (row: MRT_Row<Person>) => {
@@ -82,7 +79,7 @@ const AddStaffTable = () => {
               color="primary"
               onClick={() => handleEditRow(row)}
             >
-              <EditIcon />
+              <Edit className="h-4 w-4" />
             </IconButton>
           </Tooltip>
           <Tooltip title="Delete">
@@ -90,12 +87,12 @@ const AddStaffTable = () => {
               color="error"
               onClick={() => handleDeleteRow(row)}
             >
-              <DeleteIcon />
+              <Trash2 className="h-4 w-4" />
             </IconButton>
           </Tooltip>
         </Box>
       ),
-      size: 120, // Adjust size for actions column
+      size: 120,
     },
     {
       accessorFn: (row) => `${row.firstName} ${row.lastName}`,
@@ -160,46 +157,50 @@ const AddStaffTable = () => {
     enableStickyHeader: true,
     enableStickyFooter: true,
     enablePagination: true,
-    muiTableContainerProps: { sx: { maxHeight: "50vh" } },
+    muiTableContainerProps: { sx: { maxHeight: "calc(100vh - 200px)" } },
     onSortingChange: setSorting,
     state: { isLoading, sorting },
     rowVirtualizerInstanceRef,
     rowVirtualizerOptions: { overscan: 5 },
     columnVirtualizerOptions: { overscan: 2 },
     renderTopToolbarCustomActions: ({ table }) => (
-      <Box sx={{ display: "flex", gap: "16px", padding: "8px", flexWrap: "wrap" }}>
+      <div className="flex gap-2 flex-wrap">
         <Button
-          className="export-button"
+          variant="outline"
+          size="sm"
           onClick={handleExportData}
-          startIcon={<FileDownloadIcon />}
         >
+          <FileDown className="mr-2 h-4 w-4" />
           Export All Data
         </Button>
         <Button
-          className="export-button"
+          variant="outline"
+          size="sm"
           disabled={table.getPrePaginationRowModel().rows.length === 0}
           onClick={() => handleExportRows(table.getPrePaginationRowModel().rows)}
-          startIcon={<FileDownloadIcon />}
         >
+          <FileDown className="mr-2 h-4 w-4" />
           Export All Rows
         </Button>
         <Button
-          className="export-button"
+          variant="outline"
+          size="sm"
           disabled={table.getRowModel().rows.length === 0}
           onClick={() => handleExportRows(table.getRowModel().rows)}
-          startIcon={<FileDownloadIcon />}
         >
+          <FileDown className="mr-2 h-4 w-4" />
           Export Page Rows
         </Button>
         <Button
-          className="export-button"
+          variant="outline"
+          size="sm"
           disabled={!table.getIsSomeRowsSelected() && !table.getIsAllRowsSelected()}
           onClick={() => handleExportRows(table.getSelectedRowModel().rows)}
-          startIcon={<FileDownloadIcon />}
         >
+          <FileDown className="mr-2 h-4 w-4" />
           Export Selected Rows
         </Button>
-      </Box>
+      </div>
     ),
     initialState: {
       columnVisibility: {
@@ -211,37 +212,22 @@ const AddStaffTable = () => {
   });
 
   return (
-    <section>
-      {/* Header with Title and Add Staff Button */}
-      <header
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "16px",
-        }}
-      >
-        <div
-          className="h-[40px] p-3 bg-blue-600 rounded-[8px] flex justify-center items-center gap-2 cursor-pointer"
+    <div className="space-y-4">
+      <div className="flex justify-between items-center">
+        {/* <h1 className="text-2xl font-bold">Staff Management</h1> */}
+        <Button
           onClick={() => router.push("/add-staffs")}
+          className="bg-blue-600 hover:bg-blue-700 text-white"
         >
-          <Image
-            src={AddStaffIcon}
-            alt="Add Staff Icon"
-            width={18}
-            height={18}
-          />
-          <div className="text-white text-sm leading-tight">
-            Add New Staff
-          </div>
-        </div>
-      </header>
+          <UserPlus className="mr-2 h-4 w-4" />
+          Add New Staff
+        </Button>
+      </div>
 
-      {/* Table */}
-      <div>
+      <div className="rounded-md border">
         <MaterialReactTable table={table} />
       </div>
-    </section>
+    </div>
   );
 };
 

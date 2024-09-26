@@ -1,14 +1,34 @@
+"use client";
+
+import { useState } from 'react';
 import UploadPhoto from './UploadPhoto';
 import TextInput from './TextInput';
+import LoadingIndicator from '@/components/ui/LoadingIndicator';
+import { FormEvent } from 'react'; // Import FormEvent from React
 
 const AddStaffForm = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsLoading(true);
+
+    // Simulate a network request (e.g., form submission)
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
+    setIsLoading(false);
+    // Handle your form submission logic here
+  };
+
+  if (isLoading) return <LoadingIndicator />; // Use the existing LoadingIndicator component
+
   return (
     <div className="w-full h-auto bg-white rounded-[20px] border border-[#d0d0d0] p-6">
       {/* Title at the top */}
       <h2 className="text-left text-2xl font-bold mb-6">Add Staff</h2>
 
       {/* Main container with flexbox */}
-      <div className="flex flex-col md:flex-row gap-6">
+      <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-6">
         {/* Left side: Photo Upload and Documents */}
         <div className="flex flex-col items-center w-full md:w-1/3">
           <div className="mb-4">
@@ -36,7 +56,7 @@ const AddStaffForm = () => {
 
           {/* Add Staff Button below document upload */}
           <div className="w-72 mt-6">
-            <button className="w-full h-12 bg-gradient-to-br from-blue-600 to-blue-500 rounded-lg text-white text-sm font-normal leading-normal flex justify-center items-center hover:bg-blue-700 transition duration-300">
+            <button type="submit" className="w-full h-12 bg-gradient-to-br from-blue-600 to-blue-500 rounded-lg text-white text-sm font-normal leading-normal flex justify-center items-center hover:bg-blue-700 transition duration-300">
               Add Staff
             </button>
           </div>
@@ -59,7 +79,7 @@ const AddStaffForm = () => {
           <TextInput label="Password" placeholder="Enter password" type="password" />
           <TextInput label="Confirm Password" placeholder="Confirm password" type="password" />
         </div>
-      </div>
+      </form>
     </div>
   );
 };

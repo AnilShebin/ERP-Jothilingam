@@ -1,3 +1,4 @@
+import EmployeeAttendanceTable from "@/components/EmployeeAttendanceTable";
 import HeaderBox from "@/components/HeaderBox";
 import TodayAttendance from "@/components/TodayAttendance";
 import TotalStaff from "@/components/TotalStaff";
@@ -20,8 +21,10 @@ const AdminDashBoard = () => {
             <TotalStaff totalStaffs={30} />
             <TodayAttendance todayAttendance={18} />
             <TotalTasks totalTasks={5} />
+
           </div>
           {/* <Attendance /> */}
+          <EmployeeAttendanceTable/>
         </header>
       </div>
     </section>

@@ -212,31 +212,92 @@ export const authFormSchema = (type: string) =>
     gender: type === "sign-in" ? z.string().optional() : z.string().max(10),
 
     // (sign in / sign up)
-    email: z.string().email(),
-    password: z.string().min(8),
+    staff_id: z.string().regex(/^\d+$/, "Staff ID must be a numeric string"),
+    password: z.string().min(8, "Password must be at least 8 characters long"),
   });
 
-  export const addStaffSchema = z.object({
-    firstName: z.string().min(1, 'First Name is required'),
-    lastName: z.string().min(1, 'Last Name is required'),
-    gender: z.enum(['Male', 'Female', 'Other'], { errorMap: () => ({ message: 'Please select a gender' }) }),
-    dateOfBirth: z.string().min(1, 'Date of Birth is required'),
-    address: z.string().min(1, 'Address is required'),
-    city: z.string().min(1, 'City is required'),
-    state: z.string().min(1, 'State is required'),
-    country: z.string().min(1, 'Country is required'),
-    postalCode: z.string().min(1, 'Postal Code is required'),
-    email: z.string().email('Invalid email address'),
-    phoneNumber: z.string().min(10, 'Phone number must be at least 10 digits'),
+export const addStaffSchema = z
+  .object({
+    firstName: z.string().min(1, "First Name is required"),
+    lastName: z.string().min(1, "Last Name is required"),
+    gender: z.enum(["Male", "Female", "Other"], {
+      errorMap: () => ({ message: "Please select a gender" }),
+    }),
+    dateOfBirth: z.string().min(1, "Date of Birth is required"),
+    address: z.string().min(1, "Address is required"),
+    city: z.string().min(1, "City is required"),
+    state: z.string().min(1, "State is required"),
+    country: z.string().min(1, "Country is required"),
+    postalCode: z.string().min(1, "Postal Code is required"),
+    email: z.string().email("Invalid email address"),
+    phoneNumber: z.string().min(10, "Phone number must be at least 10 digits"),
     alternatePhoneNumber: z.string().optional(), // Optional field
-    password: z.string().min(6, 'Password must be at least 6 characters'),
-    confirmPassword: z.string().min(6, 'Please confirm your password'),
+    password: z.string().min(6, "Password must be at least 6 characters"),
+    confirmPassword: z.string().min(6, "Please confirm your password"),
     documents: z.object({
       degreeCertificate: z.boolean().optional(),
       aadhaar: z.boolean().optional(),
       experienceCertificate: z.boolean().optional(),
-    })
-  }).refine((data) => data.password === data.confirmPassword, {
-    message: 'Passwords do not match',
-    path: ['confirmPassword'],
+    }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
   });
+
+// // Base URL for the Node.js backend API
+// const BASE_URL = "http://your-node-backend-url/api";
+
+// /**
+//  * Fetch all staff members (READ)
+//  */
+// export async function fetchStaff() {
+//   const response = await fetch(`${BASE_URL}/staff`, {
+//     method: "GET",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//   });
+//   return await response.json();
+// }
+
+// /**
+//  * Create a new staff member (CREATE)
+//  */
+// export async function createStaff(staffData: any) {
+//   const response = await fetch(`${BASE_URL}/staff`, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(staffData),
+//   });
+//   return await response.json();
+// }
+
+// /**
+//  * Update a staff member by ID (UPDATE)
+//  */
+// export async function updateStaff(staffId: string, staffData: any) {
+//   const response = await fetch(`${BASE_URL}/staff/${staffId}`, {
+//     method: "PUT",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(staffData),
+//   });
+//   return await response.json();
+// }
+
+// /**
+//  * Delete a staff member by ID (DELETE)
+//  */
+// export async function deleteStaff(staffId: string) {
+//   const response = await fetch(`${BASE_URL}/staff/${staffId}`, {
+//     method: "DELETE",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//   });
+//   return await response.json();
+// }
