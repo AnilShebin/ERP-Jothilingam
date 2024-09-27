@@ -27,7 +27,7 @@ const AddStaffTable = () => {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setData(makeData(10_000)); // Simulate data generation
+      setData(makeData(100)); // Simulate data generation
       setIsLoading(false);
     }
   }, []);

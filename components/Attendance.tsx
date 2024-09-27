@@ -95,7 +95,7 @@ const Attendance = () => {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setData(makeData(10_000));
+      setData(makeData(100));
       setIsLoading(false);
     }
   }, []);
