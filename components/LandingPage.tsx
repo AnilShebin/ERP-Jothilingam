@@ -291,7 +291,7 @@ export default function LandingPage() {
           >
             © 2024 Jothilingam ERP. All rights reserved.
           </motion.p>
-          <motion.div
+          {/* <motion.div
             className="mt-4 sm:mt-0"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -309,7 +309,7 @@ export default function LandingPage() {
             >
               Terms of Service
             </Button>
-          </motion.div>
+          </motion.div> */}
         </div>
       </footer>
     </div>
