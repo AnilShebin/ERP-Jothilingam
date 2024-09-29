@@ -3,12 +3,10 @@
 ├─ .gitignore
 ├─ README.md
 ├─ app
-│  ├─ auth                 # Auth related pages & layout (sign-in/sign-up)
+│  ├─ auth                 # Auth related pages & layout (sign-in)
 │  │  ├─ layout.tsx
 │  │  ├─ sign-in
 │  │  │  └─ page.tsx
-│  │  └─ sign-up
-│  │     └─ page.tsx
 │  ├─ admin                # Admin-specific pages
 │  │  ├─ add-staff
 │  │  │  └─ page.tsx
@@ -25,6 +23,7 @@
 │  │  ├─ dashboard
 │  │  │  └─ page.tsx
 │  │  ├─ layout.tsx
+│  │  ├─ page.tsx
 │  ├─ globals.css          # Global styles
 │  └─ layout.tsx           # Root layout (used across app)
 ├─ components              # Reusable components (UI & business logic)
