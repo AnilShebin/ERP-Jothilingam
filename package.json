@@ -41,7 +41,7 @@
     "framer-motion": "^11.8.0",
     "lucide-react": "^0.438.0",
     "material-react-table": "^3.0.1",
-    "next": "^14.2.21",
+    "next": "14.2.35",
     "query-string": "^9.1.0",
     "react": "^18.3.1",
     "react-chartjs-2": "^5.2.0",
